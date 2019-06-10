@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+    <head>
+      <!-- <link rel="stylesheet" href="Assets/style.css"> -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">      
+    </head>
+    <body>
+      <form>
+        <button id="cats">cats</button>
+        <button id="dogs">dogs</button>
+        <div id="gallery"></div>
+      </form>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+      <script>
+        var topics = ["cats", "dogs"];
+        $("button").on("click",function(e) {
+            // clears all previous gifs
+            $("#gallery").empty();
+        e.preventDefault(); 
+          var query = $(this).text();
+          var link = "https://api.giphy.com/v1/gifs/search?api_key=hz5C1nKDmszjRoj4Z3o247PohFGYUBWO&limit=10&q=" + query;
+          $.ajax({
+              method:"GET",
+              url:link
+          }).done(function (response) {
+              console.log(response);
+              for(var i = 0; i <response.data.length; i++){
+                var imgdiv = $("<img width='200px' height='200px' class='gif' />");
+                    // how to paste the still image
+                    imgdiv.attr("src",response.data[i].images.fixed_width_still.url);
+                    imgdiv.attr("fixed",response.data[i].images.fixed_width_still.url);
+                    imgdiv.attr("track","still");
+                    // how to paste the gif
+                    imgdiv.attr("animate", response.data[i].images.original.url);
+                $("#gallery").append(imgdiv)
+              }
+          })
+          console.log(link);
+        });
+        // ,".gif", calls on gif AFTER its called.
+        $(document).on("click", ".gif", function (x) {
+            x.preventDefault();
+            console.log("hi");
+            // add attr not with response because its in ajax, but with "this" function because the gif was just selected.
+            if($(this).attr("track")==="still"){
+
+            //
+            $(this).attr("src",$(this).attr("animate") );
+
+            // tells program state of the image has changed
+            $(this).attr("track","live")
+
+            }else {$(this).attr("src",$(this).attr("fixed") );
+
+            // also tells program state of the image has changed
+            $(this).attr("track","still")
+            }
+        });
+      </script>
+    </body>
+</html>
