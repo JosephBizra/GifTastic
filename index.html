@@ -30,7 +30,9 @@
                 var imgdiv = $("<img width='200px' height='200px' class='gif' />");
                     // how to paste the still image
                     imgdiv.attr("src",response.data[i].images.fixed_width_still.url);
+                    // give still image its own attribute
                     imgdiv.attr("fixed",response.data[i].images.fixed_width_still.url);
+                    // traxks the present attribute
                     imgdiv.attr("track","still");
                     // how to paste the gif
                     imgdiv.attr("animate", response.data[i].images.original.url);
@@ -39,19 +41,20 @@
           })
           console.log(link);
         });
-        // ,".gif", calls on gif AFTER its called.
+        // ,".gif", calls on gif AFTER its called in ajax.
         $(document).on("click", ".gif", function (x) {
             x.preventDefault();
             console.log("hi");
-            // add attr not with response because its in ajax, but with "this" function because the gif was just selected.
+            // add attr not with 'response' because its in ajax, but with "this" function because the gif was just selected.
             if($(this).attr("track")==="still"){
 
-            //
+            // turns image into gif
             $(this).attr("src",$(this).attr("animate") );
 
             // tells program state of the image has changed
             $(this).attr("track","live")
 
+            // turns gif into image
             }else {$(this).attr("src",$(this).attr("fixed") );
 
             // also tells program state of the image has changed
