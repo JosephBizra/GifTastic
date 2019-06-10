@@ -7,7 +7,7 @@
     <body>
       <form>
         <button id="cats">cats</button>
-        <button id="dogs">dogs</button>
+        <button id="dogs">jontron</button>
         <div id="gallery"></div>
       </form>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
@@ -16,9 +16,13 @@
       <script>
         var topics = ["cats", "dogs"];
         $("button").on("click",function(e) {
+
             // clears all previous gifs
             $("#gallery").empty();
-        e.preventDefault(); 
+
+            // prevents screan from refreshing on click.
+         e.preventDefault(); 
+         
           var query = $(this).text();
           var link = "https://api.giphy.com/v1/gifs/search?api_key=hz5C1nKDmszjRoj4Z3o247PohFGYUBWO&limit=10&q=" + query;
           $.ajax({
