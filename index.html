@@ -15,21 +15,30 @@
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <script>
         var topics = ["cats", "dogs"];
+        var query;
+        var bigObject;
+        var offset = 0;
         $("button").on("click",function(e) {
 
             // clears all previous gifs
-            $("#gallery").empty();
-
+            if(query===$(this).text()){
+                offset = offset + 10;          
+            }else{
+              $("#gallery").empty();
+              offset = 0;
+            }
+          
             // prevents screan from refreshing on click.
          e.preventDefault(); 
-         
-          var query = $(this).text();
-          var link = "https://api.giphy.com/v1/gifs/search?api_key=hz5C1nKDmszjRoj4Z3o247PohFGYUBWO&limit=10&q=" + query;
+
+          query = $(this).text();
+          var link = "https://api.giphy.com/v1/gifs/search?api_key=hz5C1nKDmszjRoj4Z3o247PohFGYUBWO&offset="+offset+"&limit=10&q=" + query;
           $.ajax({
               method:"GET",
               url:link
           }).done(function (response) {
               console.log(response);
+              bigObject = response;
               for(var i = 0; i <response.data.length; i++){
                 var imgdiv = $("<img width='200px' height='200px' class='gif' />");
                     // how to paste the still image
@@ -40,7 +49,7 @@
                     imgdiv.attr("track","still");
                     // how to paste the gif
                     imgdiv.attr("animate", response.data[i].images.original.url);
-                $("#gallery").append(imgdiv)
+                $("#gallery").prepend(imgdiv)
               }
           })
           console.log(link);
