@@ -1,0 +1,23 @@
+#form {
+    border: blue solid;
+    background-color: gray;
+}
+#form2 {
+    background-color: grey;
+    text-align: right;
+}
+button {
+    background-color: black;
+    color: white;
+}
+#submit {
+    background-color: black;
+    color: white;   
+}
+html {
+    background-color: grey;
+}
+#gallery {
+    background-color: grey;
+    border: blue solid;
+}

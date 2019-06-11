@@ -1,25 +1,37 @@
 <!DOCTYPE html>
 <html>
     <head>
-      <!-- <link rel="stylesheet" href="Assets/style.css"> -->
+      <link rel="stylesheet" href="Assers/style.css">
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">      
     </head>
     <body>
-      <form>
-        <button id="cats">cats</button>
+      <form id="form">
+        <button id="tf2 gmod">tf2 gmod</button>
         <button id="dogs">jontron</button>
-        <div id="gallery"></div>
+        <button id="is boris">verdun ww1</button>
       </form>
+      <form id="form2">
+        <input id="search" type="text" placeholder="search...">
+        <input id="submit" type="submit">
+      </form>
+      <div id="gallery"></div>
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
       <script>
-        var topics = ["cats", "dogs"];
+        // var topics = ["cats", "dogs"];
         var query;
         var bigObject;
         var offset = 0;
-        $("button").on("click",function(e) {
+        $("#submit").on("click", function(event) {
+          event.preventDefault();
+          var search = $("#search").val()
+          $("#form").append("<button>"+search+"</button>");
+        })
+        $(document).on("click","button",function(e) {  
 
+         // prevents screan from refreshing on click.
+         e.preventDefault();
             // clears all previous gifs
             if(query===$(this).text()){
                 offset = offset + 10;          
@@ -27,9 +39,7 @@
               $("#gallery").empty();
               offset = 0;
             }
-          
-            // prevents screan from refreshing on click.
-         e.preventDefault(); 
+           
 
           query = $(this).text();
           var link = "https://api.giphy.com/v1/gifs/search?api_key=hz5C1nKDmszjRoj4Z3o247PohFGYUBWO&offset="+offset+"&limit=10&q=" + query;
